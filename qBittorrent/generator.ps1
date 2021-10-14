@@ -24,8 +24,8 @@ $Hash = [System.BitConverter]::ToString($RawHash).Replace("-", "")
 rm -Recurse $TargetDir\*
 
 # set version and hash inside the manifest template
-$Manifest = cat -Raw $PSScriptRoot\res\manifest.psd1
+$Manifest = cat -Raw $PSScriptRoot\res\pog.psd1
 $Manifest = $Manifest -replace "{{VERSION}}", ($Version -replace '"', '``"')
 $Manifest = $Manifest -replace "{{HASH}}", ($Hash -replace '"', '``"')
 # write out the manifest file
-$Manifest | Out-File $TargetDir\manifest.psd1 -NoNewline
+$Manifest | Out-File $TargetDir\pog.psd1 -NoNewline
