@@ -28,8 +28,8 @@ expressiveness, and elegance (in that order of priority).
 
 		# TODO: after Pkg dependencies are figured out, modify nim_wrapper.cmd
 		# TODO: add other commands
-		Export-Command "nim" "./.pog/nim_wrapper.cmd" -NoSymlink
-		Export-Command "nimble" "./.pog/nimble_wrapper.cmd" -NoSymlink
+		Export-Command "nim" "$ManifestRoot/nim_wrapper.cmd" -NoSymlink
+		Export-Command "nimble" "$ManifestRoot/nimble_wrapper.cmd" -NoSymlink
 	}
 }
 
