@@ -1,4 +1,5 @@
 Invoke-RestMethod "https://api.github.com/repos/nim-lang/Nim/tags"
+	| % {$_} # split up the single returned list from I-RM to pipeline objects
 	| % {$_.name}
 	| ? {$_.StartsWith("v")}
 	| % {$_.Substring(1)}
