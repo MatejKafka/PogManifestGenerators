@@ -8,12 +8,12 @@ param(
 )
 
 # get download hash
-$HashUrl = "https://download.jetbrains.com/idea/ideaIU-${Version}.win.zip.sha256"
+$HashUrl = "https://download.jetbrains.com/rider/JetBrains.Rider-${Version}.win.zip.sha256"
 try {
 	$Response = (iwr $HashUrl).Content
 	$Hash = ($Response -split " ")[0]
 } catch {
-	throw "Could not retrieve hash for the InteliJ IDEA version '$Version'. Are you sure it is a valid version? (URL: '$HashUrl')"
+	throw "Could not retrieve hash for the JetBrains Rider version '$Version'. Are you sure it is a valid version? (URL: '$HashUrl')"
 }
 
 # clear target dir
@@ -21,17 +21,10 @@ rm -Recurse $TargetDir\*
 mkdir $TargetDir\.pog
 
 # copy all files except for the manifest itself
-cp -Recurse $PSScriptRoot\res\* -Exclude "pog.psd1", "pog_older-versions.psd1" $TargetDir\.pog
-
-$Manifest = if ((New-PackageVersion $Version) -ge (New-PackageVersion 2021.2)) {
-	# versions since 2021.2 do not support 32-bit x86 anymore
-	cat -Raw "$PSScriptRoot\res\pog.psd1"
-} else {
-	# older versions support both x86 and x64 from a single package
-	cat -Raw "$PSScriptRoot\res\pog_older-versions.psd1"
-}
+cp -Recurse $PSScriptRoot\res\* -Exclude pog.psd1 $TargetDir\.pog
 
 # set version and hash inside the manifest template
+$Manifest = cat -Raw $PSScriptRoot\res\pog.psd1
 $Manifest = $Manifest -replace "{{VERSION}}", ($Version -replace '"', '``"')
 $Manifest = $Manifest -replace "{{HASH}}", ($Hash -replace '"', '``"')
 # write out the manifest file

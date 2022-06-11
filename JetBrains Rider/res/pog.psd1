@@ -1,13 +1,11 @@
 @{
-	Name = "IntelliJ IDEA"
+	Name = "JetBrains Rider"
 	Architecture = "x64"
-
 	Version = "{{VERSION}}"
-	_Hash = "{{HASH}}"
 
-	Install = {
-		$Url = "https://download.jetbrains.com/idea/ideaIU-$($this.Version).win.zip"
-		Install-FromUrl $Url -ExpectedHash $this._Hash
+	Install = @{
+		Url = {"https://download.jetbrains.com/rider/JetBrains.Rider-$($this.Version).win.zip"}
+		Hash = "{{HASH}}"
 	}
 
 	Enable = {
@@ -18,15 +16,15 @@
 		Assert-Directory "./data/plugins"
 		Assert-Directory "./logs"
 
-		# TODO: check content for existing file
+
 		Assert-File "./config/idea.properties" {$this._IdeaProperties}
-		Assert-File "./config/idea64.exe.vmoptions" {Get-Content -Raw "./app/bin/idea64.exe.vmoptions"}
+		Assert-File "./config/rider64.exe.vmoptions" {Get-Content -Raw "./app/bin/rider64.exe.vmoptions"}
 
 		# ensure auto-updates are disabled
 		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "$ManifestRoot/DisableAutoUpdate.ps1"
 
-		Export-Shortcut "IntelliJ IDEA" "$ManifestRoot/idea_shortcut.cmd" -IconPath "./app/bin/idea.ico"
-		Export-Command "idea" "$ManifestRoot/idea_command.cmd" -NoSymlink
+		Export-Shortcut "JetBrains Rider" "$ManifestRoot/rider_shortcut.cmd" -IconPath "./app/bin/rider.ico"
+		Export-Command "rider" "$ManifestRoot/rider_command.cmd" -NoSymlink
 	}
 
 # content of generated idea.properties
