@@ -18,10 +18,9 @@ try {
 
 # clear target dir
 rm -Recurse $TargetDir\*
-mkdir $TargetDir\.pog
 
 # copy all files except for the manifest itself
-cp -Recurse $PSScriptRoot\res\* -Exclude "pog.psd1", "pog_older-versions.psd1" $TargetDir\.pog
+cp -Recurse $PSScriptRoot\res\.pog $TargetDir\.pog
 
 $Manifest = if ((New-PackageVersion $Version) -ge (New-PackageVersion 2021.2)) {
 	# versions since 2021.2 do not support 32-bit x86 anymore
@@ -35,4 +34,4 @@ $Manifest = if ((New-PackageVersion $Version) -ge (New-PackageVersion 2021.2)) {
 $Manifest = $Manifest -replace "{{VERSION}}", ($Version -replace '"', '``"')
 $Manifest = $Manifest -replace "{{HASH}}", ($Hash -replace '"', '``"')
 # write out the manifest file
-$Manifest | Out-File $TargetDir\.pog\pog.psd1 -NoNewline
+$Manifest | Out-File $TargetDir\pog.psd1 -NoNewline

@@ -1,13 +1,11 @@
 @{
 	Name = "JetBrains CLion"
 	Architecture = "x64"
-
 	Version = "{{VERSION}}"
-	_Hash = "{{HASH}}"
 
-	Install = {
-		$Url = "https://download.jetbrains.com/cpp/CLion-$($this.Version).win.zip"
-		Install-FromUrl $Url -ExpectedHash $this._Hash
+	Install = @{
+		Url = {"https://download.jetbrains.com/cpp/CLion-$($this.Version).win.zip"}
+		Hash = "{{HASH}}"
 	}
 
 	Enable = {
@@ -23,10 +21,10 @@
 		Assert-File "./config/clion64.exe.vmoptions" {Get-Content -Raw "./app/bin/clion64.exe.vmoptions"}
 
 		# ensure auto-updates are disabled
-		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "$ManifestRoot/DisableAutoUpdate.ps1"
+		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "./.pog/DisableAutoUpdate.ps1"
 
-		Export-Shortcut "CLion" "$ManifestRoot/clion_shortcut.cmd" -IconPath "./app/bin/clion.ico"
-		Export-Command "clion" "$ManifestRoot/clion_command.cmd" -NoSymlink
+		Export-Shortcut "CLion" "./.pog/clion_shortcut.cmd" -IconPath "./app/bin/clion.ico"
+		Export-Command "clion" "./.pog/clion_command.cmd" -NoSymlink
 	}
 
 # content of generated idea.properties
