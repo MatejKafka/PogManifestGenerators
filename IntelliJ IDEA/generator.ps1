@@ -22,7 +22,7 @@ rm -Recurse $TargetDir\*
 # copy all files except for the manifest itself
 cp -Recurse $PSScriptRoot\res\.pog $TargetDir\.pog
 
-$Manifest = if ((New-PackageVersion $Version) -ge (New-PackageVersion 2021.2)) {
+$Manifest = if ([version]::new($Version) -ge [version]::new(2021.2)) {
 	# versions since 2021.2 do not support 32-bit x86 anymore
 	cat -Raw "$PSScriptRoot\res\pog.psd1"
 } else {
