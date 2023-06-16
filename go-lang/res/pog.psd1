@@ -14,6 +14,6 @@
 		Assert-Directory "./data"
 		Assert-Directory "./data/packages"
 
-		Export-Command "go" "./.pog/go_wrapper.cmd" -NoSymlink
+		Export-Command "go" "./.pog/go_wrapper.cmd"
 	}
 }

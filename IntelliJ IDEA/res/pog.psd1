@@ -24,7 +24,7 @@
 		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "./.pog/DisableAutoUpdate.ps1"
 
 		Export-Shortcut "IntelliJ IDEA" "./.pog/idea_shortcut.cmd" -IconPath "./app/bin/idea.ico"
-		Export-Command "idea" "./.pog/idea_command.cmd" -NoSymlink
+		Export-Command "idea" "./.pog/idea_command.cmd"
 	}
 
 # content of generated idea.properties

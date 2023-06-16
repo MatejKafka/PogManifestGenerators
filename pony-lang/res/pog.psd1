@@ -9,6 +9,6 @@
 	}
 
 	Enable = {
-		Export-Command "ponyc" "./app/bin/ponyc.exe" -NoSymlink
+		Export-Command "ponyc" "./app/bin/ponyc.exe"
 	}
 }

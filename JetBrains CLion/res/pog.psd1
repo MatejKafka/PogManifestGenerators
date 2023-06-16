@@ -24,7 +24,7 @@
 		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "./.pog/DisableAutoUpdate.ps1"
 
 		Export-Shortcut "CLion" "./.pog/clion_shortcut.cmd" -IconPath "./app/bin/clion.ico"
-		Export-Command "clion" "./.pog/clion_command.cmd" -NoSymlink
+		Export-Command "clion" "./.pog/clion_command.cmd"
 	}
 
 # content of generated idea.properties

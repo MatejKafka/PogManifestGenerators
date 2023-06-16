@@ -9,6 +9,6 @@
 	}
 
 	Enable = {
-		Export-Command "lz4" "./app/lz4.exe"
+		Export-Command "lz4" "./app/lz4.exe" -Symlink
 	}
 }

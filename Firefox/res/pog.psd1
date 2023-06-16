@@ -11,20 +11,41 @@
 	}
 	
 	Enable = {
-		Write-Warning "Firefox updater and crash reporter write to registry (HKCU\Software\Mozilla\Firefox)."
-
 		Assert-Directory "./data"
-		Assert-Directory "./config"
 		Assert-Directory "./cache"
+
+		Assert-File "./app/distribution/policies.json" -FixedContent $this._PolicyJson
 
 		Set-SymlinkedPath "./data/datareporting" "./cache/datareporting" Directory
 		Set-SymlinkedPath "./data/cache2" "./cache/cache2" Directory
 
-		# add symlinks for easier editing
-		Set-SymlinkedPath "./config/userChrome.css" "./data/chrome/userChrome.css" File
-		Set-SymlinkedPath "./config/userContent.css" "./data/chrome/userContent.css" File
-		# TODO: add other user-editable files as symlinks
+		Export-Shortcut "Firefox" "./app/firefox.exe" `
+			-Arguments @("-profile", (Resolve-Path "./data"), "--allow-downgrade") `
+			-Environment @{
+				# disable crash reporter, it writes to AppData
+				MOZ_CRASHREPORTER_DISABLE = 1
 
-		Export-Shortcut "Firefox" "./.pog/firefox_wrapper.cmd" -IconPath "./app/firefox.exe"
+				# FIXME: these are apparently internal, and Firefox overrides them when starting the crash reporter
+				#MOZ_CRASHREPORTER_DATA_DIRECTORY = "./cache/crashreporter"
+				#MOZ_CRASHREPORTER_EVENTS_DIRECTORY = "./cache/events"
+				#MOZ_CRASHREPORTER_PING_DIRECTORY = "./cache/pings"
+			}
 	}
+
+	_PolicyJson = @'
+{
+	"policies": {
+		"DisableAppUpdate": true,
+		"DisableDefaultBrowserAgent": true,
+		"DontCheckDefaultBrowser": true,
+		
+		"Preferences": {
+			"browser.privacySegmentation.createdShortcut": {
+				"Value": true,
+				"Status": "locked"
+			}
+		}
+	}
+}
+'@
 }

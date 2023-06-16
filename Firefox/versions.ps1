@@ -3,8 +3,9 @@ Invoke-WebRequest "https://releases.mozilla.org/pub/firefox/releases/" `
 	| % {if ($_.href -match "^/pub/firefox/releases/([0-9.]+.*)/$") {$Matches[1]}} `
 	# filter out ESR, funnelcake and similar extra versions
 	| ? {$_ -match "^[0-9.]+(b[0-9]*)?$"} `
-	# filter out versions earlier than 53, they did not have SHA-256 hashes precomputed, only SHA-512 (also, versions before 42 do not have an x64 build)
-	| ? {[int]($_ -split "\.")[0] -ge 53}
+	# filter out versions earlier than 67, some required features are not supported (also, versions before 53
+	#  don't have a precomputed SHA-256 hash, only SHA-512, and versions before 42 do not have an x64 build)
+	| ? {[int]($_ -split "\.")[0] -ge 67}
 
 # WIP: Nightly versions
 # Invoke-WebRequest "https://releases.mozilla.org/pub/firefox/nightly/" `

@@ -24,7 +24,7 @@
 		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "./.pog/DisableAutoUpdate.ps1"
 
 		Export-Shortcut "JetBrains Rider" "./.pog/rider_shortcut.cmd" -IconPath "./app/bin/rider.ico"
-		Export-Command "rider" "./.pog/rider_command.cmd" -NoSymlink
+		Export-Command "rider" "./.pog/rider_command.cmd"
 	}
 
 # content of generated idea.properties
