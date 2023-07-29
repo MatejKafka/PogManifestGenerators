@@ -18,10 +18,10 @@
 
 
 		Assert-File "./config/idea.properties" {$this._IdeaProperties}
-		Assert-File "./config/clion64.exe.vmoptions" {Get-Content -Raw "./app/bin/clion64.exe.vmoptions"}
+		Assert-File "./config/clion64.exe.vmoptions" "./app/bin/clion64.exe.vmoptions"
 
 		# ensure auto-updates are disabled
-		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "./.pog/DisableAutoUpdate.ps1"
+		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} {& "./.pog/DisableAutoUpdate.ps1" $_}
 
 		Export-Shortcut "CLion" "./.pog/clion_shortcut.cmd" -IconPath "./app/bin/clion.ico"
 		Export-Command "clion" "./.pog/clion_command.cmd"

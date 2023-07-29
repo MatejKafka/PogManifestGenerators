@@ -18,10 +18,10 @@
 
 
 		Assert-File "./config/idea.properties" {$this._IdeaProperties}
-		Assert-File "./config/rider64.exe.vmoptions" {Get-Content -Raw "./app/bin/rider64.exe.vmoptions"}
+		Assert-File "./config/rider64.exe.vmoptions" "./app/bin/rider64.exe.vmoptions"
 
 		# ensure auto-updates are disabled
-		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} "./.pog/DisableAutoUpdate.ps1"
+		Assert-File "./config/config/options/updates.xml" {$this._UpdatesXml} {& "./.pog/DisableAutoUpdate.ps1" $_}
 
 		Export-Shortcut "JetBrains Rider" "./.pog/rider_shortcut.cmd" -IconPath "./app/bin/rider.ico"
 		Export-Command "rider" "./.pog/rider_command.cmd"
