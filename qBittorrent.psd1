@@ -1,6 +1,6 @@
 @{
     ListVersions = {
-        Invoke-RestMethod "https://sourceforge.net/projects/qbittorrent/rss?path=/qbittorrent-win32" | % {
+        Invoke-RestMethod -UseBasicParsing "https://sourceforge.net/projects/qbittorrent/rss?path=/qbittorrent-win32" | % {
             if ($_.title.InnerText -notmatch "^/qbittorrent-win32/qbittorrent-(.*)/qbittorrent_(.*)_x64_setup.exe$") {
                 return
             }
@@ -18,7 +18,7 @@
         Write-Verbose "Downloading installer for qBittorrent, version '$Version' to calculate the hash..."
         try {
             # the installer is only ~25MB large, so it's acceptable to download it to calculate the hash
-            $InstallerBytes = (Invoke-WebRequest $InstallerUrl -UserAgent "Wget").Content
+            $InstallerBytes = (Invoke-WebRequest -UseBasicParsing $InstallerUrl -UserAgent "Wget").Content
         } catch {
             throw "Could not download the installer for qBittorrent, version '$Version' to calculate the hash: $_ (URL: '$InstallerUrl')"
         }

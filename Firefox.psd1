@@ -1,13 +1,13 @@
 @{
 	ListVersions = {
-		Invoke-WebRequest "https://releases.mozilla.org/pub/firefox/releases/" `
+		Invoke-WebRequest -UseBasicParsing "https://releases.mozilla.org/pub/firefox/releases/" `
 			| % Links `
 			| % {if ($_.href -match "^/pub/firefox/releases/([0-9.]+.*)/$") {$Matches[1]}} `
-			# filter out ESR, funnelcake and similar extra versions
-			| ? {$_ -match "^[0-9.]+(b[0-9]*)?$"} `
-			# filter out versions earlier than 67, some required features are not supported (also, versions before 53
-			#  don't have a precomputed SHA-256 hash, only SHA-512, and versions before 42 do not have an x64 build)
+			| ? {$_ -match "^[0-9.]+(b[0-9]*)?$"} <# filter out ESR, funnelcake and similar extra versions #> `
 			| ? {[int]($_ -split "\.")[0] -ge 67}
+
+		#    /\ filter out versions earlier than 67, some required features are not supported (also, versions before 53
+		#       don't have a precomputed SHA-256 hash, only SHA-512, and versions before 42 do not have an x64 build)
 
 		# WIP: Nightly versions
 		# Invoke-WebRequest "https://releases.mozilla.org/pub/firefox/nightly/" `
@@ -23,7 +23,7 @@
 
 	Generate = {
 		$Version = $_
-		$Response = Invoke-WebRequest "https://releases.mozilla.org/pub/firefox/releases/$Version/SHA256SUMS" | % Content
+		$Response = Invoke-WebRequest -UseBasicParsing "https://releases.mozilla.org/pub/firefox/releases/$Version/SHA256SUMS" | % Content
 		$Hash = $Response -split "`n" | ? {$_ -like "* win64/en-US/Firefox*.exe"} | % {($_ -split "  ")[0].ToUpper()}
 
 		return [ordered]@{
