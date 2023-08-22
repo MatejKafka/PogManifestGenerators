@@ -7,7 +7,7 @@
 	}
 
 	Generate = {
-		$Version = $_
+		param($Version)
 		# get download hash
 		$HashUrl = "https://download.jetbrains.com/cpp/CLion-${Version}.win.zip.sha256"
 		try {

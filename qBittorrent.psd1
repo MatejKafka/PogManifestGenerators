@@ -11,7 +11,7 @@
     }
 
     Generate = {
-        $Version = $_
+        param($Version)
         # get download hash
         $InstallerUrl = "https://downloads.sourceforge.net/project/qbittorrent/qbittorrent-win32/" +`
                     "qbittorrent-${Version}/qbittorrent_${Version}_x64_setup.exe"

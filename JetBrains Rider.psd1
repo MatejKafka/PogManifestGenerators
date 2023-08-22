@@ -8,7 +8,7 @@
     }
 
     Generate = {
-        $Version = $_
+        param($Version)
         # get download hash
         $HashUrl = "https://download.jetbrains.com/rider/JetBrains.Rider-${Version}.win.zip.sha256"
         try {

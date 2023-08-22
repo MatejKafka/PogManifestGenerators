@@ -6,7 +6,7 @@
     }
 
     Generate = {
-        $Version = $_
+        param($Version)
         # get download hash
         $HashUrl = "https://download.jetbrains.com/idea/ideaIU-${Version}.win.zip.sha256"
         try {

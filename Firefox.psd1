@@ -22,7 +22,7 @@
 	}
 
 	Generate = {
-		$Version = $_
+		param($Version)
 		$Response = Invoke-WebRequest -UseBasicParsing "https://releases.mozilla.org/pub/firefox/releases/$Version/SHA256SUMS" | % Content
 		$Hash = $Response -split "`n" | ? {$_ -like "* win64/en-US/Firefox*.exe"} | % {($_ -split "  ")[0].ToUpper()}
 

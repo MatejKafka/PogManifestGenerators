@@ -10,7 +10,7 @@
 	}
 
 	Generate = {
-		$Version = $_
+		param($Version)
 		# get download hash
 		Write-Verbose "Downloading hash for nim-lang, version '$Version'..."
 		$HashUrl = "https://nim-lang.org/download/nim-${Version}_x64.zip.sha256"
