@@ -17,8 +17,9 @@
                     continue
                 }
 
+                Write-Verbose "Trying build '${Build}'..."
                 try {
-                    $null = Invoke-WebRequest -UseBasicParsing "https://curl.se/windows/dl-${Build}/"
+                    $null = Invoke-WebRequest -UseBasicParsing "https://curl.se/windows/dl-${Build}/" -Method HEAD
                     echo $Build
                 } catch {
                     break
