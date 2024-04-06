@@ -1,6 +1,6 @@
 @{
 	ListVersions = {
-		return Invoke-RestMethod -UseBasicParsing "https://api.github.com/repos/lz4/lz4/releases" `
+		return Invoke-RestMethod -UseBasicParsing -FollowRelLink "https://api.github.com/repos/lz4/lz4/releases" `
 			| % {$_} <# split single array to separate pipeline items #> `
 			| ? {$_.tag_name.StartsWith("v") -and $_.tag_name -ne "v1.8.1"} <# v1.8.1 does not have binaries #> `
 			| % {@{
