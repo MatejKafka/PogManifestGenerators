@@ -15,23 +15,10 @@
     }
 
     Generate = {
-        $Version = $_.Version
-        $Url = $_.Url
-
-        # get download hash
-        Write-Verbose "Downloading archive for ccache, version '$Version' to calculate the hash..."
-        try {
-            $ArchiveBytes = (Invoke-WebRequest -UseBasicParsing $Url).Content
-        } catch {
-            throw "Could not download the archive for ccache, version '$Version' to calculate the hash: $_ (URL: '$Url')"
-        }
-        $RawHash = [System.Security.Cryptography.SHA256]::HashData($ArchiveBytes)
-        $Hash = [System.BitConverter]::ToString($RawHash).Replace("-", "")
-
         return [ordered]@{
-            Version = $Version
-            Url = $Url
-            Hash = $Hash
+            Version = $_.Version
+            Url = $_.Url
+            Hash = Get-UrlHash $_.Url
         }
     }
 }

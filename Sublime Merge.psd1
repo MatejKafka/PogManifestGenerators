@@ -6,19 +6,10 @@
     }
 
     Generate = {
-        param($Version)
-
-        $SrcUrl = "https://download.sublimetext.com/sublime_merge_build_${Version}_x64.zip"
-
-        try {$InstallerBytes = (Invoke-WebRequest -UseBasicParsing $SrcUrl).Content}
-        catch {throw "Could not download the archive to calculate a hash: $_ (URL: '$SrcUrl')"}
-
-        $RawHash = [System.Security.Cryptography.SHA256]::HashData($InstallerBytes)
-        $Hash = [System.BitConverter]::ToString($RawHash).Replace("-", "")
-
-        @{
+        $Version = $_
+        return [ordered]@{
             Version = $Version
-            Hash = $Hash
+            Hash = Get-UrlHash "https://download.sublimetext.com/sublime_merge_build_${Version}_x64.zip"
         }
     }
 }
