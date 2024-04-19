@@ -1,7 +1,6 @@
 @{
     ListVersions = {
-        return Invoke-RestMethod -UseBasicParsing -FollowRelLink "https://api.github.com/repos/ccache/ccache/releases" `
-            | % {$_} <# split single array to separate pipeline items #> `
+        Get-GitHubRelease ccache/ccache `
             | ? {$_.tag_name.StartsWith("v")} `
             | % {
                 $Asset = $_.assets | ? {$_.browser_download_url -like "*ccache-*-windows-x86_64.zip" -or $_.browser_download_url -like "*ccache-*-windows-64.zip"}

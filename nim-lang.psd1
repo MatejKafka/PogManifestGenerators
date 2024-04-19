@@ -1,7 +1,6 @@
 @{
 	ListVersions = {
-		Invoke-RestMethod -UseBasicParsing "https://api.github.com/repos/nim-lang/Nim/tags" `
-			| % {$_} <# split up the single returned list from I-RM to pipeline objects #> `
+		Get-GitHubRelease -Tags nim-lang/Nim `
 			| % {$_.name} `
 			| ? {$_.StartsWith("v")} `
 			| % {$_.Substring(1)} `

@@ -1,6 +1,6 @@
 @{
     ListVersions = {
-        return Invoke-RestMethod -UseBasicParsing "https://go.dev/dl/?mode=json&include=all" `
+        Invoke-RestMethod -UseBasicParsing "https://go.dev/dl/?mode=json&include=all" `
             | % {$_} `
             | ? {$_.stable} `
             | % {[ordered]@{

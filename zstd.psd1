@@ -1,7 +1,6 @@
 @{
     ListVersions = {
-        return Invoke-RestMethod -UseBasicParsing -FollowRelLink "https://api.github.com/repos/facebook/zstd/releases" `
-            | % {$_} <# split single array to separate pipeline items #> `
+        Get-GitHubRelease facebook/zstd `
             | ? {$_.tag_name.StartsWith("v")} `
             | % {
                 $Asset = $_.assets | ? browser_download_url -like "*zstd-v*-win64.zip"

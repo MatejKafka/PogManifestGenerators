@@ -1,7 +1,6 @@
 @{
     ListVersions = {
-        return Invoke-RestMethod -UseBasicParsing -FollowRelLink "https://api.github.com/repos/typst/typst/releases" `
-            | % {$_} <# split single array to separate pipeline items #> `
+        Get-GitHubRelease typst/typst `
             | ? {$_.tag_name.StartsWith("v") -and $_.tag_name -notlike "v23-03-*"} `
             | % {@{
                 Version = $_.tag_name.Substring(1)
