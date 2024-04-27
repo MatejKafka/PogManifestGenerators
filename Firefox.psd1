@@ -1,6 +1,6 @@
 @{
 	ListVersions = {
-		Invoke-WebRequest -UseBasicParsing "https://releases.mozilla.org/pub/firefox/releases/" `
+		Invoke-WebRequest "https://releases.mozilla.org/pub/firefox/releases/" `
 			| % Links `
 			| % {if ($_.href -match "^/pub/firefox/releases/([0-9.]+.*)/$") {$Matches[1]}} `
 			| ? {$_ -match "^[0-9.]+(b[0-9]*)?$"} <# filter out ESR, funnelcake and similar extra versions #> `
@@ -23,12 +23,12 @@
 
 	Generate = {
 		param($Version)
-		$Response = Invoke-WebRequest -UseBasicParsing "https://releases.mozilla.org/pub/firefox/releases/$Version/SHA256SUMS" | % Content
-		$Hash = $Response -split "`n" | ? {$_ -like "* win64/en-US/Firefox*.exe"} | % {($_ -split "  ")[0].ToUpper()}
 
 		return [ordered]@{
 			Version = $Version
-			Hash = $Hash
+			Hash = Get-HashFromChecksumFile `
+				"https://releases.mozilla.org/pub/firefox/releases/$Version/SHA256SUMS" `
+				"win64/en-US/Firefox Setup $Version.exe"
 		}
 	}
 }

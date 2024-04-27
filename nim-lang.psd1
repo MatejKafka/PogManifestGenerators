@@ -10,20 +10,10 @@
 
 	Generate = {
 		param($Version)
-		# get download hash
-		Write-Verbose "Downloading hash for nim-lang, version '$Version'..."
-		$HashUrl = "https://nim-lang.org/download/nim-${Version}_x64.zip.sha256"
-		try {
-			$Response = Invoke-WebRequest -UseBasicParsing $HashUrl
-			$HashStr = [System.Text.Encoding]::UTF8.GetString($Response.Content)
-			$Hash = ($HashStr -split " ")[0]
-		} catch {
-			throw "Could not download the hash file for nim-lang, version '$Version': $_ (URL: '$HashUrl')"
-		}
 
 		return [ordered]@{
 			Version = $Version
-			Hash = $Hash
+			Hash = Get-HashFromChecksumFile "https://nim-lang.org/download/nim-${Version}_x64.zip.sha256" "nim-${Version}_x64.zip"
 		}
 	}
 }

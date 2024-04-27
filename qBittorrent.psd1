@@ -1,6 +1,6 @@
 @{
     ListVersions = {
-        Invoke-RestMethod -UseBasicParsing "https://sourceforge.net/projects/qbittorrent/rss?path=/qbittorrent-win32" | % {
+        Invoke-RestMethod "https://sourceforge.net/projects/qbittorrent/rss?path=/qbittorrent-win32" | % {
             if ($_.title.InnerText -notmatch "^/qbittorrent-win32/qbittorrent-(.*)/qbittorrent_(.*)_x64_setup.exe$") {
                 return
             }

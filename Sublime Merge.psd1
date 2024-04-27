@@ -1,6 +1,6 @@
 @{
     ListVersions = {
-        return (Invoke-WebRequest -UseBasicParsing https://www.sublimemerge.com/download) -split "`n" `
+        return (Invoke-WebRequest https://www.sublimemerge.com/download) -split "`n" `
             | Select-String '<h3>Build (\d+)</h3>' `
             | % {$_.Matches.Groups[1].Value}
     }
