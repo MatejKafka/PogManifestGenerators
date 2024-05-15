@@ -2,7 +2,7 @@
     ListVersions = {
         Get-GitHubRelease restic/restic `
             | ? {$_.tag_name.StartsWith("v")} `
-            | ? {[Pog.PackageVersion]$_.tag_name.Substring(1) -ge [Pog.PackageVersion]"0.8.0"} <# no support for --cache-dir #> `
+            | ? {[Pog.PackageVersion]$_.tag_name.Substring(1) -ge "0.8.0"} <# no support for --cache-dir #> `
             | % {
                 $Asset = $_.assets | ? {$_.name -like "restic_*_windows_amd64.zip"}
                 $ChecksumAsset = $_.assets | ? name -eq "SHA256SUMS"
