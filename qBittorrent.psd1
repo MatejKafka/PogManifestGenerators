@@ -18,7 +18,7 @@
         return [ordered]@{
             Version = $Version
             Url = $Url
-            Hash = Get-UrlHash $Url
+            Hash = Get-UrlHash $Url -UserAgent Wget
         }
     }
 }
