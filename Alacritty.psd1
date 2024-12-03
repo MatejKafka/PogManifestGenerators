@@ -5,12 +5,10 @@
             | ? {$_.tag_name.StartsWith("v")} `
             | % {
                 $ExeAsset = $_.assets | ? {$_.name -like "Alacritty-v*-portable.exe"}
-                $ConfigAsset = $_.assets | ? {$_.name -eq "alacritty.yml"}
-                if ($ExeAsset -and $ConfigAsset) {
+                if ($ExeAsset) {
                     return @{
                         Version = $_.tag_name.Substring(1)
                         ExeUrl = $ExeAsset.browser_download_url
-                        ConfigUrl = $ConfigAsset.browser_download_url
                     }
                 }
             }
@@ -19,12 +17,8 @@
     Generate = {
         return [ordered]@{
             Version = $_.Version
-            
-            ExeUrl = $_.ExeUrl
-            ExeHash = Get-UrlHash $_.ExeUrl
-
-            ConfigUrl = $_.ConfigUrl
-            ConfigHash = Get-UrlHash $_.ConfigUrl
+            Url = $_.ExeUrl
+            Hash = Get-UrlHash $_.ExeUrl
         }
     }
 }
