@@ -1,4 +1,3 @@
-# FIXME: versions since 0.13.0 switched to a .toml config file, this generator will not list them
 @{
     ListVersions = {
         Get-GitHubRelease alacritty/alacritty `
